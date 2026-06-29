@@ -7,7 +7,7 @@
 // Cross-origin requests (the GitHub queue API, raw bundle fetches) are left
 // entirely to the app — the SW never touches them.
 
-const CACHE = "gel-shell-DPQeoq6E"
+const CACHE = "gel-shell-yLjsmgkk"
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -46,7 +46,10 @@ self.addEventListener("fetch", (event) => {
       (async () => {
         const cache = await caches.open(CACHE)
         try {
-          const res = await fetch(req)
+          // `no-store` bypasses the HTTP cache so a fresh deploy is ALWAYS
+          // picked up (otherwise the browser can hand the SW a stale index.html
+          // and users stay on the old build).
+          const res = await fetch(req, { cache: "no-store" })
           // Only cache a genuine, successful shell — never a transient 404/5xx
           // (which would otherwise poison the offline shell).
           if (res && res.ok && res.type === "basic") cache.put(req, res.clone())
