@@ -7,7 +7,7 @@
 // Cross-origin requests (the GitHub queue API, raw bundle fetches) are left
 // entirely to the app — the SW never touches them.
 
-const CACHE = "gel-shell-yLjsmgkk"
+const CACHE = "gel-shell-CufHLrPg"
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
